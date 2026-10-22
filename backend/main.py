@@ -21,13 +21,25 @@ app = FastAPI(
     version="1.1.0",
 )
 
+# CORS: autoriser le frontend GitHub Pages et les tests locaux.
+# FRONTEND_ORIGINS peut être défini dans Render avec une liste d'origines
+# séparées par des virgules (sans chemin après le domaine).
+default_origins = [
+    "https://911-hex.github.io",
+    "https://mybestsim-seo.onrender.com",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+configured_origins = os.getenv("FRONTEND_ORIGINS", "").strip()
 origins = [
     item.strip()
-    for item in os.getenv(
-        "FRONTEND_ORIGINS",
-        "http://localhost:5500,http://127.0.0.1:5500,"
-        "http://localhost:8000,http://127.0.0.1:8000",
-    ).split(",")
+    for item in (
+        configured_origins.split(",")
+        if configured_origins
+        else default_origins
+    )
     if item.strip()
 ]
 
@@ -36,7 +48,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=False,
-    allow_methods=["GET"],
+    allow_methods=["GET", "OPTIONS"],
     allow_headers=["*"],
 )
 
