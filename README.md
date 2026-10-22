@@ -1,4 +1,4 @@
-# MyBestSim - article SEO + catalogue eSIM Go (version corrigée)
+# MyBestSim - article SEO + catalogue eSIM Go
 
 Cette archive contient l’article, le JavaScript/CSS, ainsi que le backend FastAPI. Le backend peut aussi servir l’article directement sur le port 8000 : cette méthode évite que le navigateur bloque les appels API pour une raison CORS.
 
